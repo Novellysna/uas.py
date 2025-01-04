@@ -33,43 +33,87 @@ flowchart TD
 ## Demo program kalkulator sederhana
 
 ```python
-def kalkulator():
-    print("Selamat datang di Kalkulator Sederhana!")
-    print("Pilih operasi yang ingin Anda lakukan:")
-    print("1. Penjumlahan (+)")
-    print("2. Pengurangan (-)")
-    print("3. Perkalian (*)")
-    print("4. Pembagian (/)")
+class CalculatorData:
+    def __init__(self):
+        self.num1 = 0
+        self.num2 = 0
+        self.operator = ''
 
-    try:
-        pilihan = int(input("Masukkan pilihan (1/2/3/4): "))
+    def set_data(self, num1, num2, operator):
+        self.num1 = num1
+        self.num2 = num2
+        self.operator = operator
 
-        if pilihan in [1, 2, 3, 4]:
-            angka1 = float(input("Masukkan angka pertama: "))
-            angka2 = float(input("Masukkan angka kedua: "))
+    def get_data(self):
+        return self.num1, self.num2, self.operator
 
-            if pilihan == 1:
-                hasil = angka1 + angka2
-                print(f"Hasil dari {angka1} + {angka2} = {hasil}")
-            elif pilihan == 2:
-                hasil = angka1 - angka2
-                print(f"Hasil dari {angka1} - {angka2} = {hasil}")
-            elif pilihan == 3:
-                hasil = angka1 * angka2
-                print(f"Hasil dari {angka1} * {angka2} = {hasil}")
-            elif pilihan == 4:
-                if angka2 != 0:
-                    hasil = angka1 / angka2
-                    print(f"Hasil dari {angka1} / {angka2} = {hasil}")
-                else:
-                    print("Error: Pembagian dengan nol tidak diperbolehkan!")
+
+class CalculatorView:
+    @staticmethod
+    def get_input():
+        try:
+            num1 = float(input("Masukkan angka pertama: "))
+            operator = input("Masukkan operator (+, -, *, /): ")
+            num2 = float(input("Masukkan angka kedua: "))
+            return num1, operator, num2
+        except ValueError:
+            print("Input tidak valid. Masukkan angka yang benar.")
+            return None
+
+    @staticmethod
+    def display_result(result):
+        print(f"Hasil: {result}")
+
+    @staticmethod
+    def display_error(message):
+        print(f"Error: {message}")
+
+
+class CalculatorProcess:
+    @staticmethod
+    def calculate(num1, num2, operator):
+        try:
+            if operator == '+':
+                return num1 + num2
+            elif operator == '-':
+                return num1 - num2
+            elif operator == '*':
+                return num1 * num2
+            elif operator == '/':
+                if num2 == 0:
+                    return "Tidak dapat membagi dengan nol."
+                return num1 / num2
+            else:
+                return "Operator tidak valid."
+        except Exception as e:
+            return f"Terjadi kesalahan: {e}"
+
+
+# Main program
+def main():
+    data = CalculatorData()
+    view = CalculatorView()
+    process = CalculatorProcess()
+
+    # Dapatkan input dari pengguna
+    inputs = view.get_input()
+    if inputs:
+        num1, operator, num2 = inputs
+        data.set_data(num1, num2, operator)
+
+        # Proses perhitungan
+        num1, num2, operator = data.get_data()
+        result = process.calculate(num1, num2, operator)
+
+        # Tampilkan hasil
+        if isinstance(result, str) and "Error" in result:
+            view.display_error(result)
         else:
-            print("Pilihan tidak valid. Silakan coba lagi.")
-    except ValueError:
-        print("Input tidak valid. Harap masukkan angka.")
+            view.display_result(result)
 
-# Memulai program kalkulator
-kalkulator()
+
+if __name__ == "__main__":
+    main()
 
 ```
 ## Output Program
