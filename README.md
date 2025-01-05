@@ -1,6 +1,6 @@
 # Program Kalkulator sederhana
 ## Dokumentasi pembuatan program
-https://youtube.com/shorts/1fwiqCNuDrY?si=8RGeCJ61y0AWC2VH
+https://youtu.be/L_CHOVJD_So?si=MNXk5HzsbgnYHSUJ
 
 ## flowchart 
 
